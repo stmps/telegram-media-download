@@ -1,6 +1,8 @@
-from telethon.sync import TelegramClient
-from telethon.tl.types import InputMessagesFilterPhotoVideo
 import os
+from telethon.sync import TelegramClient
+# Refer to the documentation for other filter types.
+# https://tl.telethon.dev/types/messages_filter.html
+from telethon.tl.types import InputMessagesFilterPhotoVideo
 
 api_id = os.environ['api_id']
 api_hash = os.environ['api_hash']
