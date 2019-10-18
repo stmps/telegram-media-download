@@ -1,5 +1,3 @@
-# https://docs.telethon.dev/en/latest/basic/quick-start.html
-
 from telethon.sync import TelegramClient
 from telethon.tl.types import InputMessagesFilterPhotoVideo
 import os
@@ -7,11 +5,12 @@ import os
 api_id = os.environ['api_id']
 api_hash = os.environ['api_hash']
 channel = int(os.environ['channel'])
+limit = int(os.environ.get('limit', 10))
 
 with TelegramClient('session_name', api_id, api_hash) as client:
 
     for message in client.iter_messages(channel,
-                                        limit=10,
+                                        limit=limit,
                                         filter=InputMessagesFilterPhotoVideo):
 
         filename = (f'{message.date.year}'
