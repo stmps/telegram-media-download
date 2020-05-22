@@ -11,7 +11,6 @@ def main():
     # use env vars if they're provided, otherwise use command-line args
     api_id = os.environ.get('api-id', args.api_id)
     api_hash = os.environ.get('api-hash', args.api_hash)
-    channel = int(os.environ.get('channel', args.channel))
     limit = int(os.environ.get('limit', args.limit))
 
     with TelegramClient('session_name', api_id, api_hash) as client:
@@ -19,6 +18,8 @@ def main():
         if args.list_channels:
             list_channel_ids(client)
         else:
+            channel = int(os.environ.get('channel', args.channel))
+
             # Refer to the documentation for other filter types.
             # https://tl.telethon.dev/types/messages_filter.html
             message_filter = types.InputMessagesFilterPhotoVideo
