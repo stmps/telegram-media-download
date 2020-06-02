@@ -12,7 +12,6 @@ from telethon.sync import TelegramClient
 class DownloadBar(Bar):
     import sys
 
-    check_tty = False  # required for e.g. PyCharm or Jupyter Notebook
     file = sys.stdout
     suffix = '%(percent).1f%% - %(filesize_kbytes)d KB'
 
@@ -63,8 +62,12 @@ class TelegramMediaDownload(TelegramClient):
                 print(f'File already exists: {path}')
             else:
                 bar = DownloadBar(message=f'Downloading: {path}')
-                path = message.download_media(file=path, progress_callback=bar.callback)
+                real_path = message.download_media(file=path, progress_callback=bar.callback)
                 bar.finish()
+
+                # set the file's access and modified time to that of the Telegram message
+                timestamp = message.date.timestamp()
+                os.utime(real_path, (timestamp, timestamp))
 
 
 def get_args():
